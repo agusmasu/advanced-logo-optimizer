@@ -5,9 +5,14 @@ Deploy with: modal deploy modal_app.py
 Local dev:   modal serve modal_app.py
 """
 
+import os
 import modal
 
-app = modal.App("wer-logo-processor")
+MODAL_APP_NAME = os.getenv("MODAL_APP_NAME")
+if not MODAL_APP_NAME:
+    raise ValueError("MODAL_APP_NAME environment variable is required")
+
+app = modal.App(MODAL_APP_NAME)
 
 # Define the container image with all dependencies
 image = (

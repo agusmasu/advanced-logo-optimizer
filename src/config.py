@@ -29,4 +29,4 @@ DEFAULT_RMBG_ERODE_PIXELS = 1
 
 # API settings
 RESEND_API_KEY = os.getenv("RESEND_API_KEY")
-EMAIL_FROM = "no-reply@wer.studio"
+EMAIL_FROM = os.getenv("EMAIL_FROM")

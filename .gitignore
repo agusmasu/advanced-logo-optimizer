@@ -16,6 +16,10 @@ env/
 .DS_Store
 *.log
 
+# Environment
+.env
+.env.*
+
 # Data (large files)
 data/
 outputs/
