@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tus Logos Están Listos — Wer Studio</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #0d0d0d;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .email-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+    }
+
+    .header {
+      background-color: #0d0d0d;
+      padding: 40px 48px;
+      text-align: center;
+    }
+
+    .header-logo {
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .header-logo span {
+      display: block;
+      font-size: 24px;
+      letter-spacing: 0.15em;
+      margin-top: 4px;
+    }
+
+    .content {
+      padding: 56px 48px;
+    }
+
+    .greeting {
+      font-size: 14px;
+      color: #666666;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #0d0d0d;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .message {
+      font-size: 16px;
+      color: #333333;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .highlight-box {
+      background-color: #fafafa;
+      border: 2px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 32px;
+      margin: 32px 0;
+    }
+
+    .highlight-box-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #666666;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 16px;
+    }
+
+    .highlight-box-content {
+      font-size: 15px;
+      color: #0d0d0d;
+    }
+
+    .highlight-box-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .highlight-box-content li {
+      padding: 8px 0;
+      border-bottom: 1px solid #e5e5e5;
+      display: flex;
+      align-items: center;
+    }
+
+    .highlight-box-content li:last-child {
+      border-bottom: none;
+    }
+
+    .highlight-box-content li::before {
+      content: "→";
+      margin-right: 12px;
+      color: #0d0d0d;
+      font-weight: 600;
+    }
+
+    .attachment-notice {
+      background-color: #0d0d0d;
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 24px 32px;
+      margin: 32px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .attachment-icon {
+      width: 48px;
+      height: 48px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    .attachment-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .attachment-text {
+      flex: 1;
+    }
+
+    .attachment-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .attachment-text span {
+      font-size: 13px;
+      color: #999999;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: #e5e5e5;
+      margin: 40px 0;
+    }
+
+    .closing {
+      font-size: 15px;
+      color: #333333;
+      margin-bottom: 24px;
+    }
+
+    .signature {
+      font-size: 14px;
+      color: #0d0d0d;
+    }
+
+    .signature strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .footer {
+      background-color: #fafafa;
+      padding: 40px 48px;
+      text-align: center;
+      border-top: 1px solid #e5e5e5;
+    }
+
+    .footer-brand {
+      font-size: 11px;
+      font-weight: 600;
+      color: #0d0d0d;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      color: #666666;
+      font-style: italic;
+      margin-bottom: 24px;
+    }
+
+    .footer-links {
+      margin-bottom: 24px;
+    }
+
+    .footer-links a {
+      color: #0d0d0d;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      margin: 0 16px;
+      transition: opacity 0.2s;
+    }
+
+    .footer-links a:hover {
+      opacity: 0.6;
+    }
+
+    .footer-legal {
+      font-size: 11px;
+      color: #999999;
+      line-height: 1.6;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .content {
+        padding: 40px 24px;
+      }
+
+      .header {
+        padding: 32px 24px;
+      }
+
+      .footer {
+        padding: 32px 24px;
+      }
+
+      .title {
+        font-size: 26px;
+      }
+
+      .highlight-box {
+        padding: 24px;
+      }
+
+      .attachment-notice {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .attachment-icon {
+        margin-right: 0;
+        margin-bottom: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-wrapper">
+    <!-- Header -->
+    <div class="header">
+      <p class="header-logo">
+        WER
+        <span>STUDIO</span>
+      </p>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <p class="greeting">Wer Studio</p>
+
+      <h1 class="title">Tus logos están listos para descargar</h1>
+
+      <p class="message">
+        Hemos procesado tu solicitud y tus archivos de logo ya están disponibles.
+        Encontrarás todos los formatos adjuntos a este correo en un archivo comprimido,
+        listos para usar en cualquier contexto.
+      </p>
+
+      <!-- Attachment Notice -->
+      <div class="attachment-notice">
+        <div class="attachment-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0d0d0d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </div>
+        <div class="attachment-text">
+          <strong>Archivo adjunto</strong>
+          <span>logos.zip — Todos tus archivos comprimidos</span>
+        </div>
+      </div>
+
+      <!-- What's Included -->
+      <div class="highlight-box">
+        <p class="highlight-box-title">Qué incluye tu paquete</p>
+        <div class="highlight-box-content">
+          <ul>
+            <li>Archivos SVG vectoriales (escalables sin pérdida)</li>
+            <li>Archivos PNG en alta resolución</li>
+            <li>Versiones optimizadas para web y redes sociales</li>
+            <li>Variantes en fondo transparente</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="message">
+        Si necesitás ajustes adicionales o tenés alguna consulta sobre los archivos,
+        no dudes en responder a este correo. Estamos acá para ayudarte.
+      </p>
+
+      <div class="divider"></div>
+
+      <p class="closing">
+        Gracias por usar ser parte de Wer.<br>
+        Esperamos que disfrutes tus nuevos logos.
+      </p>
+
+      <div class="signature">
+        <strong>El equipo de Wer Studio</strong>
+        <span>Una herramienta experimental para crear logos con inteligencia artificial.</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p class="footer-brand">Wer Studio</p>
+      <p class="footer-tagline">"Identidad visual donde las ideas toman forma"</p>
+
+      <div class="footer-links">
+        <a href="https://wer.studio">wer.studio</a>
+        <a href="https://instagram.com/werstudio.ok">@werstudio.ok</a>
+      </div>
+
+      <p class="footer-legal">
+        Este correo fue enviado porque solicitaste la generación de logos<br>
+        a través de nuestra plataforma.<br><br>
+        © 2025 Wer Studio. Todos los derechos reservados.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

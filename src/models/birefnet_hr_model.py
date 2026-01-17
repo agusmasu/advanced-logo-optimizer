@@ -6,6 +6,10 @@ from transformers import AutoModelForImageSegmentation
 
 from .base import BackgroundRemover
 
+# Pre-loaded model references (set by Modal at startup)
+_preloaded_model = None
+_preloaded_device = None
+
 
 class BiRefNetHRRemover(BackgroundRemover):
     """Background remover using BiRefNet-HR (high resolution, best for fine details)."""
@@ -15,6 +19,14 @@ class BiRefNetHRRemover(BackgroundRemover):
         self._device = None
 
     def _load_model(self):
+        global _preloaded_model, _preloaded_device
+
+        # Use pre-loaded model if available (set by Modal)
+        if _preloaded_model is not None:
+            self._model = _preloaded_model
+            self._device = _preloaded_device
+            return
+
         if self._model is None:
             self._device = "cuda" if torch.cuda.is_available() else "cpu"
             self._model = AutoModelForImageSegmentation.from_pretrained(
