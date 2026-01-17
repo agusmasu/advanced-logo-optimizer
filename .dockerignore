@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+*.log
+.DS_Store
+.git/
+.gitignore
+.vscode/
+
+# Data directories (mount as volumes instead)
+data/outputs/
+data/checkpoints/
+outputs/
+inputs/
+sam2_checkpoints/
+outputs.zip

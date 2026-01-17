@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+*.log
+
+# Data (large files)
+data/
+outputs/
+inputs/
+sam2_checkpoints/
+*.zip
