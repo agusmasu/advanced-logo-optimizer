@@ -11,10 +11,10 @@ from resend import Emails
 
 from src.config import EMAIL_FROM, RESEND_API_KEY
 from src.models.birefnet_hr_model import BiRefNetHRRemover
-from src.processors.cleanup import quantize, trim_transparent
-from src.processors.exporter import export_to_eps, export_to_pdf, optimize_svg
+from src.processors.cleanup import trim_transparent
+from src.processors.exporter import export_to_eps, export_to_pdf
 from src.processors.upscaler import upscale
-from src.processors.vectorizer import vectorize_color
+from src.processors.pipeline_vectorizer import run_vectorization_pipeline
 
 # Get the path to the email template
 TEMPLATE_DIR = Path(__file__).parent.parent / "templates"
@@ -29,46 +29,60 @@ def process_logo(input_path: str, output_dir: str) -> dict:
     """
     Process a logo image through the full pipeline.
     Returns a dictionary with paths to all generated files.
+
+    Pipeline:
+    1. Upscale (Real-ESRGAN 4x)
+    2. Remove background (BiRefNet-HR)
+    3. Trim transparent areas
+    4. Vectorize (LAB-quantize + potrace + SVGO)
+    5. Export to PDF/EPS
     """
     # Step 1: Upscale the image (Real-ESRGAN 4x)
     upscaled_path = os.path.join(output_dir, "0_upscaled.png")
-    im = upscale(input_path, upscaled_path)
+    upscale(input_path, upscaled_path)
 
-    # Step 2: Remove background (BiRefNet-HR - best for fine details)
+    # Step 2: Remove background (BiRefNet-HR)
     no_bg_path = os.path.join(output_dir, "1_no_bg.png")
-    remover = BiRefNetHRRemover()
-    im = remover.remove(upscaled_path, no_bg_path)
+    im = BiRefNetHRRemover().remove(upscaled_path, no_bg_path)
 
     # Step 3: Trim transparent areas
     im = trim_transparent(im, pad=24)
-
-    # Step 4: Quantize colors for cleaner vectors
-    im = quantize(im, max_colors=12)
     clean_path = os.path.join(output_dir, "2_clean.png")
     im.save(clean_path, "PNG")
 
-    # Step 5: Vectorize using vtracer (preserves colors)
-    svg_path = os.path.join(output_dir, "3_vector.svg")
-    vectorize_color(clean_path, svg_path)
+    # Step 4: Vectorize using LAB-quantize + potrace pipeline
+    # This pipeline:
+    # - Composites on white background
+    # - Applies light denoising
+    # - Quantizes to 6 colors using LAB K-Means
+    # - Traces with potrace (smooth curves)
+    # - Optimizes with SVGO
+    svg_path = os.path.join(output_dir, "3_vectorized.svg")
+    run_vectorization_pipeline(
+        im,
+        svg_path,
+        n_colors=6,
+        denoise=True,
+        denoise_strength="light",
+        use_svgo=True,
+        alphamax=1.0,
+        turdsize=10,
+        opttolerance=0.2,
+    )
 
-    # Step 6: Optimize SVG using scour
-    svg_optimized_path = os.path.join(output_dir, "4_optimized.svg")
-    optimize_svg(svg_path, svg_optimized_path)
+    # Step 5: Export to PDF
+    pdf_path = os.path.join(output_dir, "4_output.pdf")
+    export_to_pdf(svg_path, pdf_path)
 
-    # Step 7: Export to PDF
-    pdf_path = os.path.join(output_dir, "5_output.pdf")
-    export_to_pdf(svg_optimized_path, pdf_path)
-
-    # Step 8: Export to EPS
-    eps_path = os.path.join(output_dir, "6_output.eps")
-    export_to_eps(svg_optimized_path, eps_path)
+    # Step 6: Export to EPS
+    eps_path = os.path.join(output_dir, "5_output.eps")
+    export_to_eps(svg_path, eps_path)
 
     return {
         "upscaled": upscaled_path,
         "no_bg": no_bg_path,
         "clean": clean_path,
         "svg": svg_path,
-        "svg_optimized": svg_optimized_path,
         "pdf": pdf_path,
         "eps": eps_path,
     }
@@ -109,7 +123,7 @@ def _send_email(email: str, file_paths: dict) -> dict:
         html_content = f.read()
 
     params = {
-        "from": EMAIL_FROM,
+        "from": f"Wer Studio <{EMAIL_FROM}>",
         "to": [email],
         "subject": "Tus Logos Están Listos — Wer Studio",
         "html": html_content,

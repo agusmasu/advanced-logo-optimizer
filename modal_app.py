@@ -5,6 +5,8 @@ Deploy with: modal deploy modal_app.py
 Local dev:   modal serve modal_app.py
 """
 
+from typing import Optional
+
 import modal
 
 app = modal.App("aio")
@@ -19,13 +21,18 @@ image = (
         "potrace",
         "libgl1-mesa-glx",
         "libglib2.0-0",
+        "nodejs",
+        "npm",
     )
+    # Install SVGO for SVG optimization
+    .run_commands("npm install -g svgo")
     # Python dependencies
     .pip_install(
         # Core image processing
         "pillow",
         "numpy",
         "opencv-python-headless",
+        "scipy",  # Used by rmbg_model for morphological operations
         # Background removal (BiRefNet-HR via transformers)
         "torch",
         "torchvision",
@@ -36,8 +43,9 @@ image = (
         "spandrel",
         "huggingface_hub",
         # Vectorization
-        "vtracer",
-        "scour",
+        "vtracer",  # Python library for color vectorization
+        "scour",  # SVG optimization
+        "scikit-learn",  # For LAB-space K-Means quantization
         # Web API
         "fastapi",
         "uvicorn[standard]",
@@ -125,7 +133,7 @@ class LogoProcessor:
         print(f"Models loaded on {device}")
 
     @modal.method()
-    def process(self, image_data: bytes, options: dict = None) -> dict:
+    def process(self, image_data: bytes, options: Optional[dict] = None) -> dict:
         """
         Process a logo image. Private method callable only via Modal SDK.
 
